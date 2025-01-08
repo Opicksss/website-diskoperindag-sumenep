@@ -24,6 +24,10 @@ Route::middleware(['guest'])->group(function () {
 
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
+    Route::get('forgot', [LoginController::class, 'forgot'])->name('forgot');
+    Route::post('/forgot-proses', [LoginController::class, 'forgot_proses'])->name('forgot-proses');
+    Route::get('reset/{token}', [LoginController::class, 'reset'])->name('reset');
+    Route::post('/reset-proses', [LoginController::class, 'reset_proses'])->name('reset-proses');
 
     Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
     Route::get('contact/detail', [ContactController::class, 'detail'])->name('contact.detail');
