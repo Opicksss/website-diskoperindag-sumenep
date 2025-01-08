@@ -11,7 +11,7 @@
             <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">CONTACT US</h4>
             <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active text-primary">Contact</li>
+                <li class="breadcrumb-item active text-white-50">Contact</li>
             </ol>
         </div>
     </div>
@@ -27,7 +27,7 @@
                 <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
                     <div class="contact-img d-flex justify-content-center">
                         <div class="contact-img-inner">
-                            <img src="../assets1/img/contact-img.png" class="img-fluid w-100" alt="Image">
+                            <img src="../assets1/img/carousel-2.png" class="img-fluid w-100" alt="Image">
                         </div>
                     </div>
                 </div>
@@ -82,6 +82,52 @@
                         </form>
                     </div>
                 </div>
+
+                <!-- FAQs Start -->
+                <div class="container-fluid faq-section bg-light ">
+                    <div class="container py-3">
+                        <div class="row g-5 align-items-center">
+                            <div class="col-xl-12 wow fadeInLeft" data-wow-delay="0.2s">
+                                <div class="h-100">
+                                    <div class="mb-3">
+                                        <h1 class="display-6 mb-0">Berikut adalah pertanyaan dan saran yang sering diajukan</h6>
+                                    </div>
+                                    <div class="accordion" id="accordionExample">
+                                        @foreach ($faqs as $index => $faq)
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading{{ $index }}">
+                                                    <button
+                                                        class="accordion-button {{ $index === 0 ? '' : 'collapsed' }} border-0"
+                                                        type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapse{{ $index }}"
+                                                        aria-expanded="{{ $index === 0 ? 'true' : 'false' }}"
+                                                        aria-controls="collapse{{ $index }}">
+                                                        Q: {{ $faq->message }}?
+                                                    </button>
+                                                </h2>
+                                                <div id="collapse{{ $index }}"
+                                                    class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
+                                                    aria-labelledby="heading{{ $index }}"
+                                                    data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body rounded">
+                                                        A: {{ $faq->send }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center wow fadeInLeft mt-4" data-wow-delay="0.2s">
+                            <a class="btn btn-primary rounded-pill py-3 px-5"
+                                href="{{ route('contact.detail') }}">View More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- FAQs End -->
+
+
                 <div class="col-12">
                     <div>
                         <div class="row g-4">

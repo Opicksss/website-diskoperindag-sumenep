@@ -58,12 +58,12 @@
                               <li>
                                   <div class="dropdown-divider"></div>
                               </li>
-                              {{-- <li>
+                              <li>
                                   <a class="dropdown-item" href="{{ route('profile.index') }}">
                                       <i class="bx bx-user text-primary me-2"></i>
                                       <span class="align-middle">My Profile</span>
                                   </a>
-                              </li> --}}
+                              </li>
                               <li>
                                   <a class="dropdown-item" href='{{ route('logout') }}'>
                                       <i class="bx bx-power-off text-danger me-2"></i>

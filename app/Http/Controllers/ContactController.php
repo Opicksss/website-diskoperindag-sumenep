@@ -15,7 +15,14 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('user.contact.index');
+        $faqs = Contact::whereNotNull('send')->where('is_visible', true)->select('message', 'send')->latest()->limit(5)->get();
+        return view('user.contact.index', compact('faqs'));
+    }
+
+    public function detail()
+    {
+        $faqs = Contact::whereNotNull('send')->where('is_visible', true)->select('message', 'send')->latest()->paginate(15); // Menampilkan 5 item per halaman
+        return view('user.contact.detail', compact('faqs'));
     }
 
     public function admin(Request $request)
@@ -35,6 +42,19 @@ class ContactController extends Controller
             ->withQueryString();
 
         return view('admin.contact.index', compact('contacts'));
+    }
+
+    public function toggleVisibility(Contact $contact)
+    {
+        try {
+            $contact->is_visible = !$contact->is_visible;
+            $contact->save();
+
+            return redirect()->back()->with('success', 'Status Pesan berhasil diubah!');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan saat menyimpan
+            return redirect()->back()->with('error', 'Gagal mengubah status pesan. Silakan coba lagi.');
+        }
     }
 
     /**
@@ -86,22 +106,22 @@ class ContactController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Contact $contact)
-{
-    $request->validate([
-        'reply_message' => 'required|string',
-    ]);
-    $replyMessage = $request->input('reply_message');
-    try {
-        Mail::to($contact->email)->send(new ContactReplyMail($contact, $replyMessage));
+    {
+        $request->validate([
+            'reply_message' => 'required|string',
+        ]);
+        $replyMessage = $request->input('reply_message');
+        try {
+            Mail::to($contact->email)->send(new ContactReplyMail($contact, $replyMessage));
 
-        $contact->send = $replyMessage;
-        $contact->save();
+            $contact->send = $replyMessage;
+            $contact->save();
 
-        return redirect()->back()->with('contact.index')->with('success', 'Balasan berhasil dikirim.');
-    } catch (Exception $e) {
-        return redirect()->back()->with('contact.index')->with('error', 'Gagal mengirim balasan: ');
+            return redirect()->back()->with('contact.index')->with('success', 'Balasan berhasil dikirim.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('contact.index')->with('error', 'Gagal mengirim balasan: ');
+        }
     }
-}
 
     /**
      * Remove the specified resource from storage.

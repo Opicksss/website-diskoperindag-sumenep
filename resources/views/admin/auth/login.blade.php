@@ -26,7 +26,7 @@
                             <div class="mb-3">
                                 <label for="login" class="form-label">Email Or Username</label>
                                 <input type="text" class="form-control" id="login" name="login"
-                                    placeholder="Enter your login" value="{{ old('login') }}" autofocus required />
+                                    placeholder="Enter your login" value="{{ old('login') }}" required />
                                 @error('login')
                                     <div class="text-sm text-danger mt-2">{{ $message }}</div>
                                 @enderror

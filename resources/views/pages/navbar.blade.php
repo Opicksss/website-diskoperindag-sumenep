@@ -21,14 +21,14 @@
                                 </a>
                                 <div class="dropdown-menu">
 
-                                    <!-- navbar 1 -->
+                                    {{-- <!-- navbar 1 -->
                                     <a href="{{ route('koperasi.kecamatan') }}"
                                         class="dropdown-item {{ \Route::is('koperasi.kecamatan') ? 'active' : '' }}">Koperasi
                                         Tiap Kecamatan</a>
                                     <a href="{{ route('koperasi.kelompok') }}"
                                         class="dropdown-item {{ \Route::is('koperasi.kelompok') ? 'active' : '' }}">koperasi
                                         Tiap Kelompok</a>
-                                    <!-- //navbar 1 -->
+                                    <!-- //navbar 1 --> --}}
 
                                     <!-- navbar 2 -->
                                     <a href="{{ route('koperasi.categorykecamatan') }}"
@@ -38,7 +38,7 @@
                                         class="dropdown-item {{ \Route::is('koperasi.categorykelompok') || \Route::is('koperasi.kopkelompok') ? 'active' : '' }}">koperasi
                                         Tiap Kelompok</a>
                                     <!-- //navbar 2 -->
-                                    
+
                                     <a href="{{ route('koperasi.pengawasan') }}"
                                         class="dropdown-item {{ \Route::is('koperasi.pengawasan') || \Route::is('show.pengawasan') ? 'active' : '' }}">Kegiatan
                                         Pemeriksaan dan Pengawasan</a>

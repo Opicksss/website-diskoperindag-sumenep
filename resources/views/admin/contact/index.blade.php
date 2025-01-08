@@ -30,14 +30,15 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                         @foreach ($contacts as $contact)
-                            <tr class="{{ !empty($contact->send) ? 'table-success' : '' }}">
+                            <tr
+                                class="{{ !$contact->is_visible ? 'table-secondary' : (!empty($contact->send) ? 'table-success' : '') }}">
                                 <td>{{ $loop->iteration }}</td>
                                 <td><strong>{{ ucwords($contact->name) }}</strong></td>
                                 <td>{{ $contact->email }}</td>
                                 <td>{{ $contact->phone }}</td>
                                 <td>{{ ucfirst($contact->subject) }}</td>
-                                <td>{!!  ucfirst(Str::limit($contact->message, 50)) !!}</td>
-                                <td>{!!  ucfirst(Str::limit($contact->send, 50)) !!}</td>
+                                <td>{!! ucfirst(Str::limit($contact->message, 50)) !!}</td>
+                                <td>{!! ucfirst(Str::limit($contact->send, 50)) !!}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -50,6 +51,15 @@
                                             <button type="button" class="dropdown-item" data-bs-toggle="modal"
                                                 data-bs-target="#Modalemail{{ $contact->id }}">
                                                 <i class="bx bx-send me-1"></i> Balas</button>
+                                            <form action="{{ route('contact.toggleVisibility', $contact->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item">
+                                                    <i
+                                                        class="bx {{ $contact->is_visible ? 'bx-hide' : 'bx-show' }} me-1"></i>
+                                                    {{ $contact->is_visible ? 'Sembunyikan' : 'Tampilkan' }}
+                                                </button>
+                                            </form>
                                             @if (!empty($contact->send))
                                                 <form id="delete-form-{{ $contact->id }}"
                                                     action="{{ route('contact.destroy', $contact->id) }}" method="post">

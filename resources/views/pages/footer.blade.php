@@ -24,10 +24,18 @@
                                         <span><i class="fas fa-angle-right me-2"></i> Bidang Koperasi</span>
                                     </a>
                                     <div class="dropdown-menu">
+                                        {{-- <!-- footer 1 -->
                                         <a href="{{ route('koperasi.kecamatan') }}" class="dropdown-item">Koperasi
                                             Tiap Kecamatan</a>
                                         <a href="{{ route('koperasi.kelompok') }}" class="dropdown-item">koperasi
                                             Tiap Kelompok</a>
+                                        <!-- //footer 1 --> --}}
+                                        <!-- footer 2 -->
+                                        <a href="{{ route('koperasi.categorykecamatan') }}" class="dropdown-item">Koperasi
+                                            Tiap Kecamatan</a>
+                                        <a href="{{ route('koperasi.categorykelompok') }}" class="dropdown-item">koperasi
+                                            Tiap Kelompok</a>
+                                        <!-- //footer 2 -->
                                         <a href="{{ route('koperasi.pengawasan') }}" class="dropdown-item">Kegiatan
                                             Pemeriksaan dan Pengawasan</a>
                                         <a href="{{ route('koperasi.kesehatan') }}" class="dropdown-item">Kegiatan

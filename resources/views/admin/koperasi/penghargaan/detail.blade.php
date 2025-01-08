@@ -59,7 +59,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         @if ($penghargaan->fotos->isEmpty())
-                            <img class="card-img-top" src="{{ asset('img/cover.jpg') }}" alt="Card image cap">
+                            <img class="card-img-top" src="{{ asset('img/cover.png') }}" alt="Card image cap">
                         @else
                             @foreach ($penghargaan->fotos as $foto)
                                 <div class="py-2">

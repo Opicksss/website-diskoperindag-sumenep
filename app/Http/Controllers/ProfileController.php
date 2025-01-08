@@ -17,6 +17,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
+        // dd($user);
+
         return view('admin.profile.index', compact('user'));
     }
 
@@ -38,43 +40,49 @@ class ProfileController extends Controller
 
     public function password(Request $request, User $user)
     {
-        // dd($request);
-        // Validasi input
-        $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|confirmed|min:8',
-        ]);
+        try {
+            // dd($request);
+            // Validasi input
+            $request->validate([
+                'current_password' => 'required',
+                'password' => 'required|confirmed|min:8',
+            ]);
 
-        // Ambil user
-        $user = Auth::user();
+            // Ambil user
+            $user = Auth::user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
-            return back()
-                ->withErrors(['current_password' => 'Current password is incorrect'])
-                ->withInput();
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()
+                    ->withErrors(['current_password' => 'Current password is incorrect'])
+                    ->withInput();
+            }
+
+            // Update password
+            $user->password = Hash::make($request->password);
+            // $user->save();
+
+            return back()->with('success', 'Password successfully updated');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to reset Password');
         }
-
-        // Update password
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        return back()->with('status', 'Password successfully updated');
     }
 
     public function upload(Request $request, User $user)
     {
         try {
-            // dd($request);
             $validatedData = $request->validate([
-                'pp' => 'required|image|mimes:jpeg,png,jpg,gif|max:1000',
+                'pp' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ]);
-            // dd($user);
 
-            if (isset($validatedData['pp'])) {
-                $validatedData['pp'] = $request->file('pp')->store('profile-pp');
+            if ($request->hasFile('pp')) {
+                // Hapus pp lama jika ada
+                if ($user->pp && Storage::exists('public/' . $user->pp)) {
+                    Storage::delete('public/' . $user->pp);
+                }
+                $validatedData['pp'] = $request->file('pp')->store('profile', 'public');
             }
 
-            $user->update($validatedData);
+            $user->Update($validatedData);
 
             return back()->with('success', 'Photo uploaded successfully.');
         } catch (\Exception $e) {
@@ -84,14 +92,18 @@ class ProfileController extends Controller
 
     public function reset(User $user)
     {
-        // dd($user);
-        if ($user->pp) {
-            Storage::disk('public')->delete($user->pp);
+        try {
+            // dd($user);
+            if ($user->pp) {
+                Storage::disk('public')->delete($user->pp);
+            }
+
+            $user->pp = null;
+            $user->save();
+
+            return back()->with('success', 'Photo Reset successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to Reset photo');
         }
-
-        $user->pp = null;
-        $user->save();
-
-        return back()->with('success', 'Photo Reset successfully.');
     }
 }

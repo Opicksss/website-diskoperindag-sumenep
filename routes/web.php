@@ -26,6 +26,7 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
 
     Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::get('contact/detail', [ContactController::class, 'detail'])->name('contact.detail');
     Route::post('contact/store', [ContactController::class, 'store'])->name('contact.store');
 
     Route::get('koperasi/kecamatan', [KoperasiController::class, 'kecamatan'])->name('koperasi.kecamatan');
@@ -57,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('contactadmin/{contact}', [ContactController::class, 'show'])->name('contact.show');
         Route::put('contactadmin/{contact}', [ContactController::class, 'update'])->name('contact.update');
         Route::delete('contactadmin/{contact}', [ContactController::class, 'destroy'])->name('contact.destroy');
+        Route::post('contactadmin/{contact}/toggle-visibility', [ContactController::class, 'toggleVisibility'])->name('contact.toggleVisibility');
 
         Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::put('profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
